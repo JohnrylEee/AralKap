@@ -17,7 +17,7 @@
         <label for="sidebar-toggle" class="sidebar-collapse-button"> ☰ </label>
 
         <div class="brand">
-            <a href="../index.html" class="landing-brand">
+            <a href="../dashboard.html" class="landing-brand">
                 <img src="../Icons/blue.svg" class="blue-icon" alt="AralKap Logo">
                 <img src="../Icons/white.svg" class="white-icon" alt="AralKap Logo">
                 <h2>AralKap</h2>
@@ -28,7 +28,7 @@
 
         
        <nav class="sidebar-nav">
-            <a href="../index.html" class="nav-link ">
+            <a href="../dashboard.html" class="nav-link ">
                 
                     <img src="../Icons/dashboard-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
                     <img src="../Icons/dashboard-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
@@ -387,6 +387,325 @@
 
 
 <script src="../javascript.js"></script>
+
+    <script type="module">
+    import { auth, db } from "../firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+    import {
+        collection,
+        addDoc,
+        getDocs,
+        doc,
+        updateDoc,
+        deleteDoc,
+        query,
+        orderBy
+    } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+    let currentUser = null;
+    let allTransactions = [];
+    let activeTypeFilter = "All";
+
+    const baonForm = document.getElementById("baon-form");
+    const baonModal = document.getElementById("baon-modal");
+    const transactionCard = document.querySelector(".transaction-card");
+    const emptyStateEl = document.querySelector(".transaction-empty");
+    const searchInput = document.querySelector(".header-actions input[type='search']");
+    const periodSelect = document.querySelector(".baon-period select");
+    const monthLabel = document.querySelector(".spending-card .month-label");
+
+    // 1. AUTH GUARD & INITIAL LOAD
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+            window.location.href = "../login.html";
+            return;
+        }
+        currentUser = user;
+        await loadTransactions();
+    });
+
+    // 2. LOGOUT HANDLER
+    const logoutBtn = document.querySelector(".logout-button");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", async () => {
+            await signOut(auth);
+            window.location.href = "../login.html";
+        });
+    }
+
+    // HELPER: Check if a transaction date belongs to the current active period
+    function isInCurrentPeriod(dateStr, period) {
+        if (!dateStr) return false;
+        const txDate = new Date(dateStr + "T00:00:00");
+        const now = new Date();
+
+        if (period === "This Year") {
+            return txDate.getFullYear() === now.getFullYear();
+        }
+
+        if (period === "This Month") {
+            return (
+                txDate.getFullYear() === now.getFullYear() &&
+                txDate.getMonth() === now.getMonth()
+            );
+        }
+
+        if (period === "This Week") {
+            // Start of current week (Sunday) to end of week (Saturday)
+            const startOfWeek = new Date(now);
+            startOfWeek.setHours(0, 0, 0, 0);
+            startOfWeek.setDate(now.getDate() - now.getDay());
+
+            const endOfWeek = new Date(startOfWeek);
+            endOfWeek.setDate(startOfWeek.getDate() + 6);
+            endOfWeek.setHours(23, 59, 59, 999);
+
+            return txDate >= startOfWeek && txDate <= endOfWeek;
+        }
+
+        return true;
+    }
+
+    // 3. LOAD ALL TRANSACTIONS FROM FIRESTORE
+    async function loadTransactions() {
+        if (!currentUser) return;
+        const txRef = collection(db, "users", currentUser.uid, "transactions");
+        const q = query(txRef, orderBy("date", "desc"));
+        const snapshot = await getDocs(q);
+
+        allTransactions = [];
+        snapshot.forEach((docSnap) => {
+            allTransactions.push({ id: docSnap.id, ...docSnap.data() });
+        });
+
+        await updateActivePeriodSummary();
+        renderGroupedHistory();
+    }
+
+    // 4. CALCULATE ACTIVE PERIOD BALANCE (EXPIRED PERIODS AUTOMATICALLY RESET)
+    async function updateActivePeriodSummary() {
+        const selectedPeriod = periodSelect ? periodSelect.value : "This Month";
+        if (monthLabel) monthLabel.textContent = selectedPeriod;
+
+        let totalAllowance = 0;
+        let totalExpenses = 0;
+        let totalSavings = 0;
+
+        const categoryTotals = {
+            Food: 0,
+            Transportation: 0,
+            School: 0,
+            Others: 0
+        };
+
+        // Only count transactions inside the active week/month/year
+        const activeTransactions = allTransactions.filter((tx) =>
+            isInCurrentPeriod(tx.date, selectedPeriod)
+        );
+
+        activeTransactions.forEach((tx) => {
+            const amt = Number(tx.amount || 0);
+            if (tx.type === "Allowance") {
+                totalAllowance += amt;
+            } else if (tx.type === "Expenses") {
+                totalExpenses += amt;
+                if (categoryTotals.hasOwnProperty(tx.category)) {
+                    categoryTotals[tx.category] += amt;
+                } else {
+                    categoryTotals.Others += amt;
+                }
+            } else if (tx.type === "Savings") {
+                totalSavings += amt;
+            }
+        });
+
+        const remainingBalance = totalAllowance - totalExpenses - totalSavings;
+
+        // Update Top 3 Summary Cards
+        const summaryCards = document.querySelectorAll(".baon-summary-card h2");
+        if (summaryCards[0]) summaryCards[0].textContent = `₱${totalAllowance.toFixed(2)}`;
+        if (summaryCards[1]) summaryCards[1].textContent = `₱${totalExpenses.toFixed(2)}`;
+        if (summaryCards[2]) summaryCards[2].textContent = `₱${remainingBalance.toFixed(2)}`;
+
+        // Update Spending Breakdown Chart & Legend
+        const chartSpent = document.querySelector(".spending-chart-inner strong");
+        if (chartSpent) chartSpent.textContent = `₱${totalExpenses.toFixed(0)}`;
+
+        const legendValues = document.querySelectorAll(".legend-row strong");
+        if (legendValues[0]) legendValues[0].textContent = `₱${categoryTotals.Food.toFixed(2)}`;
+        if (legendValues[1]) legendValues[1].textContent = `₱${categoryTotals.Transportation.toFixed(2)}`;
+        if (legendValues[2]) legendValues[2].textContent = `₱${categoryTotals.School.toFixed(2)}`;
+        if (legendValues[3]) legendValues[3].textContent = `₱${categoryTotals.Others.toFixed(2)}`;
+
+        // Sync current active balance to index.html Dashboard
+        await updateDoc(doc(db, "users", currentUser.uid), {
+            totalAllowance,
+            spentAllowance: totalExpenses,
+            allowanceBalance: remainingBalance
+        });
+    }
+
+    // 5. RENDER FULL PERMANENT HISTORY GROUPED BY ALLOWANCE / MONTH
+    function renderGroupedHistory() {
+        const keyword = searchInput ? searchInput.value.trim().toLowerCase() : "";
+
+        const filtered = allTransactions.filter((tx) => {
+            const matchesType = activeTypeFilter === "All" || tx.type === activeTypeFilter;
+            const matchesSearch =
+                !keyword ||
+                tx.name.toLowerCase().includes(keyword) ||
+                (tx.category && tx.category.toLowerCase().includes(keyword)) ||
+                (tx.note && tx.note.toLowerCase().includes(keyword));
+            return matchesType && matchesSearch;
+        });
+
+        transactionCard.querySelectorAll(".firebase-history-group").forEach((el) => el.remove());
+
+        if (filtered.length === 0) {
+            emptyStateEl.style.display = "";
+            return;
+        }
+
+        emptyStateEl.style.display = "none";
+
+        // Group all saved transactions by Month & Year (e.g., "November 2026")
+        const groups = {};
+        filtered.forEach((tx) => {
+            const txDate = new Date((tx.date || "2026-01-01") + "T00:00:00");
+            const groupKey = txDate.toLocaleDateString("en-US", {
+                month: "long",
+                year: "numeric"
+            });
+            if (!groups[groupKey]) groups[groupKey] = [];
+            groups[groupKey].push(tx);
+        });
+
+        Object.entries(groups).forEach(([monthTitle, txs]) => {
+            // Find the allowance(s) recorded during this month
+            const monthAllowances = txs.filter((t) => t.type === "Allowance");
+            const allowanceNames =
+                monthAllowances.length > 0
+                    ? monthAllowances.map((a) => `${a.name} (₱${Number(a.amount).toFixed(2)})`).join(", ")
+                    : "No allowance recorded";
+
+            const isCurrentMonth = isInCurrentPeriod(txs[0].date, "This Month");
+            const statusBadge = isCurrentMonth
+                ? `<span style="font-size:0.75rem; padding:2px 8px; border-radius:999px; background:#e6f4ea; color:#188038; font-weight:600;">Active</span>`
+                : `<span style="font-size:0.75rem; padding:2px 8px; border-radius:999px; background:rgba(128,128,128,0.15); opacity:0.8; font-weight:600;">Past History</span>`;
+
+            const groupWrapper = document.createElement("div");
+            groupWrapper.className = "firebase-history-group";
+            groupWrapper.style.cssText =
+                "margin-top:1.25rem; padding:1rem; border-radius:14px; border:1px solid rgba(128,128,128,0.22);";
+
+            groupWrapper.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; padding-bottom:0.75rem; border-bottom:1px solid rgba(128,128,128,0.15);">
+                    <div>
+                        <strong style="font-size:1.05rem;">📅 ${monthTitle}</strong>
+                        <div style="font-size:0.85rem; opacity:0.8; margin-top:2px;">
+                            Allowance: <strong>${allowanceNames}</strong>
+                        </div>
+                    </div>
+                    ${statusBadge}
+                </div>
+                <div class="group-items" style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.75rem;"></div>
+            `;
+
+            const itemsContainer = groupWrapper.querySelector(".group-items");
+
+            txs.forEach((tx) => {
+                const isIncome = tx.type === "Allowance";
+                const amountColor = isIncome ? "#188038" : tx.type === "Savings" ? "#1a73e8" : "#d93025";
+                const sign = isIncome ? "+" : "-";
+
+                const item = document.createElement("div");
+                item.style.cssText =
+                    "display:flex; justify-content:space-between; align-items:center; padding:0.7rem 0.85rem; border-radius:10px; background:rgba(128,128,128,0.05); gap:1rem;";
+
+                item.innerHTML = `
+                    <div>
+                        <strong style="display:block; font-size:0.95rem;">${tx.name}</strong>
+                        <small style="opacity:0.75;">
+                            ${tx.type} · 📁 ${tx.category} · ${tx.date}
+                            ${tx.note ? `· 📝 ${tx.note}` : ""}
+                        </small>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:0.85rem;">
+                        <strong style="color:${amountColor}; font-size:0.95rem;">
+                            ${sign}₱${Number(tx.amount).toFixed(2)}
+                        </strong>
+                        <button type="button" class="delete-tx-btn" style="background:none; border:none; color:#d93025; cursor:pointer; font-weight:600; font-size:0.85rem;">
+                            Delete
+                        </button>
+                    </div>
+                `;
+
+                item.querySelector(".delete-tx-btn").addEventListener("click", async () => {
+                    await deleteDoc(doc(db, "users", currentUser.uid, "transactions", tx.id));
+                    await loadTransactions();
+                });
+
+                itemsContainer.appendChild(item);
+            });
+
+            transactionCard.appendChild(groupWrapper);
+        });
+    }
+
+    // 6. SAVE NEW TRANSACTION
+    baonForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        if (!currentUser) return;
+
+        const name = document.getElementById("transaction-name").value.trim();
+        const type = document.getElementById("transaction-type").value;
+        const category = document.getElementById("transaction-category").value;
+        const amount = parseFloat(document.getElementById("transaction-amount").value);
+        const date = document.getElementById("transaction-date").value;
+        const note = document.getElementById("transaction-note").value.trim();
+
+        try {
+            await addDoc(collection(db, "users", currentUser.uid, "transactions"), {
+                name,
+                type,
+                category,
+                amount,
+                date,
+                note,
+                periodTag: periodSelect ? periodSelect.value : "This Month",
+                createdAt: new Date()
+            });
+
+            baonForm.reset();
+            baonModal.hidden = true;
+            await loadTransactions();
+        } catch (error) {
+            alert("Error saving transaction: " + error.message);
+        }
+    }, true);
+
+    // 7. PERIOD DROPDOWN, FILTER TABS & SEARCH
+    if (periodSelect) {
+        periodSelect.addEventListener("change", async () => {
+            await updateActivePeriodSummary();
+        });
+    }
+
+    document.querySelectorAll(".transaction-tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+            document.querySelectorAll(".transaction-tab").forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
+            activeTypeFilter = tab.textContent.trim();
+            renderGroupedHistory();
+        });
+    });
+
+    if (searchInput) {
+        searchInput.addEventListener("input", renderGroupedHistory);
+    }
+</script>
+
 
 </body>
 </html>

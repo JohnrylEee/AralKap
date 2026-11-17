@@ -4,257 +4,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AralKap | Dashboard</title>
+    <title>AralKap | Your Student Companion</title>
+
     <link rel="stylesheet" href="design.css">
+
 </head>
 <body>
 
-    <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle">
+    <!-- NAVIGATION BAR -->
+    <header class="landing-navbar">
+        <a href="landingpage.html" class="landing-brand">
+            <img src="Icons/blue.svg" alt="AralKap Logo">
+            <h2>AralKap</h2>
+        </a>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-
-        <label for="sidebar-toggle" class="sidebar-collapse-button"> ☰ </label>
-
-        <div class="brand">
-            <a href="landingpage.html" class="landing-brand">
-                <img src="Icons/blue.svg" class="blue-icon" alt="AralKap Logo">
-                <img src="Icons/white.svg" class="white-icon" alt="AralKap Logo">
-                <h2>AralKap</h2>
-            </a>
-            <p>Your Student Companion</p>
-
-        </div>
-
-        <nav class="sidebar-nav">
-            <a href="index.html" class="nav-link active">
-                
-                    <img src="Icons/dashboard-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
-                    <img src="Icons/dashboard-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
-
-                <span class="nav-text">Dashboard</span>
-            </a>
-
-                <a href="Pages/tasks.html" class="nav-link ">
-                    <img src="Icons/todo-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
-                    <img src="Icons/todo.webp" class="nav-icon icon-darkmode" alt="Dashboard">
-                <span class="nav-text"> My Tasks</span>
-            </a>
-
-            <a href="Pages/baon-tracker.html" class="nav-link">
-                
-                <img src="Icons/baon-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
-                <img src="Icons/baon-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
-                <span class="nav-text">Baon Tracker</span>
-            </a>
-
-            <a href="Pages/Acassistant.html" class="nav-link">
-                <img src="Icons/aralkapAI-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
-                <img src="Icons/aralkapAI-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
-                <span class="nav-text">Acassistant</span>
-            </a>
+        <nav class="landing-nav-links" id="landing-nav-links">
+            <a href="#features">Features</a>
+            <a href="aboutus.html">About</a>
+            <a href="login.html" class="landing-login">Log In</a>
+            <a href="signup.html" class="landing-signup">Get Started</a>
         </nav>
 
-            <div class="sidebar-footer">
-                <button class="nav-link logout-button" type="button">
+        <button class="landing-menu-toggle"
+                id="landing-menu-toggle"
+                aria-label="Toggle navigation"
+                aria-expanded="false">
+            ☰
+        </button>
+    </header>
 
-                    <span class="nav-icon logout-icon">
-                        <img src="Icons/logout.png" alt="Logout">
-                    </span>
+    <main>
 
-                    <span class="nav-text">Logout</span>
-                </button>
-            </div>
+        <!-- HERO SECTION -->
+        <section class="landing-hero" id="home">
+            <div class="landing-hero-content">
+                <span class="landing-tag">YOUR STUDENT COMPANION</span>
 
-    </aside>
+                <h1>
+                    Your Student Life,
+                    <span>Organized.</span>
+                </h1>
 
+                <p>
+                    Manage your allowance, organize your school tasks,
+                    and get help with your studies—all in one place.
+                </p>
 
-    <!-- MAIN CONTENT -->
-    <main class="main-content">
+                <div class="landing-hero-buttons">
+                    <a href="signup.html" class="landing-primary-btn">
+                        Get Started →
+                    </a>
 
-        <label for="sidebar-toggle" class="mobile-sidebar-overlay"></label>
-
-        <!-- HEADER -->
-        <header class="dashboard-header">
-
-            <label for="sidebar-toggle" class="mobile-menu-button" aria-label="Open navigation"> ☰ </label>
-
-            <div class="header-title">
-                <h1>Dashboard</h1>
-                <p>Welcome to your student hub!</p>
-            </div>
-
-            <div class="header-actions">
-                <input
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search AralKap">
-
-                <button class="header-theme-button"  aria-label="Toggle theme">
-                    <span class="toggle-circle">
-                        <img src="Icons/sun.png" class="sun-icon" alt="">
-                        <img src="Icons/moon.png" class="moon-icon" alt="">
-                    </span>
-                </button>
-           
-                 <a href="Pages/profile.html" class="profile-button">
-                    <img src="Icons/user.png" alt="Profile">
-                </a>
-            </div>
-
-        </header>
-
-
-        <!-- WELCOME -->
-        <section class="welcome-section">
-            <img src="Icons/acassistant.gif"alt="Acassistant" class="welcome-gif">
-            <img src="Icons/acassistant-white.gif" alt="Acassistant" class="welcome-gif-dark">
-
-            <div>
-            <h2>Welcome back, Student!</h2>
-            <p>Stay organized, manage your tasks, and keep track of your baon.</p>
-            </div>
-
-             
-
-            
-        </section>
-
-
-        <!-- SUMMARY CARDS -->
-        <section class="summary-cards">
-
-            <article class="summary-card blue-card">
-                <img src="Icons/summary-todo.gif" class="summary-icon icon-lightmode" alt="Todo-Icon">
-                <img src="Icons/summary-todo-white.gif" class="summary-icon icon-darkmode" alt="Todo-Icon">
-                <div>
-                    <h3>Total Tasks</h3>
-                    <p class="card-number">0</p>
-                    <span>Tasks in your list</span>
+                    <a href="#features" class="landing-secondary-btn">
+                        Explore Features
+                    </a>
                 </div>
-            </article>
-
-            <article class="summary-card blue-card">
-               <img src="Icons/summary-completed-todo-blue.gif" class="summary-icon icon-lightmode" alt="Todo-Icon">
-                <img src="Icons/summary-completed-todo-white.gif" class="summary-icon icon-darkmode" alt="Todo-Icon">
-                <div>
-                    <h3>Completed Tasks</h3>
-                    <p class="card-number">0</p>
-                    <span>Tasks finished</span>
-                </div>
-            </article>
-
-            <article class="summary-card blue-card">
-               <img src="Icons/summary-pending-blue.gif" class="summary-icon icon-lightmode" alt="Todo-Icon">
-                <img src="Icons/summary-pending-white.gif" class="summary-icon icon-darkmode" alt="Todo-Icon">
-                <div>
-                    <h3>Pending Tasks</h3>
-                    <p class="card-number">0</p>
-                    <span>Tasks remaining</span>
-                </div>
-            </article>
-
-            <article class="summary-card blue-card">
-                <img src="Icons/summary-baon-blue.gif" class="summary-icon icon-lightmode" alt="Todo-Icon">
-                <img src="Icons/summary-baon-white.gif" class="summary-icon icon-darkmode" alt="Todo-Icon">
-                <div>
-                    <h3>Remaining Baon</h3>
-                    <p class="card-number">₱0</p>
-                    <span>Available balance</span>
-                </div>
-            </article>
+            </div>
 
         </section>
 
 
-       
-        <section class="dashboard-grid">
+        <!-- FEATURES SECTION -->
+        <section class="landing-features" id="features">
 
-            <!-- UPCOMING TASKS -->
-            <article class="content-card upcoming-card">
+            <div class="landing-section-heading">
+                <h2>Everything You Need to Stay on Track</h2>
+                <p>
+                    Discover tools designed to make student life easier.
+                </p>
+            </div>
 
-                <div class="empty-state">
-                    <h3>No upcoming tasks</h3>
-                    <p>Your upcoming tasks will appear here.</p>
+            <div class="landing-carousel-window">
+                <button class="carousel-arrow prev" id="carousel-prev" aria-label="Previous slide"> <img src="Icons/left.png" alt=""></button>
+
+    <div class="landing-carousel-track" id="landing-carousel-track">
+
+        <!-- BAON TRACKER -->
+        <article class="landing-feature-slide">
+            <div class="feature-visual baon-visual">
+                <div class="feature-card-content">
+                    <span class="feature-number">01 / 03</span>
+                    <h3>Baon Tracker</h3>
+                    <p>Track your allowance, monitor expenses, and manage your daily budget.</p>
+                    <a href="signup.html">
+                        Explore Baon Tracker →
+                    </a>
                 </div>
+            </div>
+        </article>
 
-            </article>
-
-
-            <!-- BAON OVERVIEW -->
-            <article class="content-card baon-card">
-
-                <div class="section-heading">
-                    <div>
-                        <span class="heading-icon">▣</span>
-                        <h2>Baon Overview</h2>
-                    </div>
-
-                    <span class="month-label">This Month</span>
+        <!-- TASK MANAGEMENT -->
+        <article class="landing-feature-slide">
+            <div class="feature-visual tasks-visual">
+                <div class="feature-card-content">
+                    <span class="feature-number">02 / 03</span>
+                    <h3>Task Management</h3>
+                    <p>Organize assignments, prioritize schoolwork, and stay ahead of deadlines.</p>
+                    <a href="signup.html">
+                        Explore My Tasks →
+                    </a>
                 </div>
+            </div>
+        </article>
 
-                <div class="baon-content">
-
-                    <div class="donut-chart">
-                        <div class="donut-inner">
-                            <strong>₱0</strong>
-                            <span>Remaining</span>
-                        </div>
-                    </div>
-
-                    <div class="baon-details">
-
-                        <div class="baon-row">
-                            <span><i class="legend spent"></i>Spent</span>
-                            <strong>₱0</strong>
-                        </div>
-
-                        <div class="baon-row">
-                            <span><i class="legend remaining"></i>Remaining</span>
-                            <strong>₱0</strong>
-                        </div>
-
-                        <div class="baon-total">
-                            <span>Total Allowance</span>
-                            <strong>₱0</strong>
-                        </div>
-
-                    </div>
-
+        <!-- ACASSISTANT -->
+        <article class="landing-feature-slide">
+            <div class="feature-visual assistant-visual">
+                <div class="feature-card-content">
+                    <span class="feature-number">03 / 03</span>
+                    <h3>Acassistant</h3>
+                    <p>Get help with lessons, homework, writing, and your studies.</p>
+                    <a href="signup.html">
+                        Meet Acassistant →
+                    </a>
                 </div>
+            </div>
+        </article>
 
-                <div class="money-tip">
-                    <span class="tip-icon">💡</span>
-                    <div>
-                        <h3>Money Tip!</h3>
-                        <p>Try to save at least 20% of your baon for emergencies.</p>
-                    </div>
-                </div>
+    </div>
+    <button class="carousel-arrow next" id="carousel-next" aria-label="Next slide"> <img src="Icons/right.png" alt=""></button>
 
-            </article>
+</div>
+
+            <div class="carousel-indicators">
+                <button class="carousel-dot active" data-slide="0"
+                        aria-label="Show Baon Tracker"></button>
+                <button class="carousel-dot" data-slide="1"
+                        aria-label="Show Task Management"></button>
+                <button class="carousel-dot" data-slide="2"
+                        aria-label="Show AI Assistant"></button>
+            </div>
 
         </section>
 
 
-        <!-- MOTIVATIONAL BANNER -->
-        <section class="motivation-banner">
-
-            <div class="motivation-emoji">🌟</div>
-
-            <div class="motivation-text">
-                <h2>Keep going, student!</h2>
-                <p>Small steps every day lead to big achievements.</p>
-            </div>
-
-            <a href="pages/Acassistant.html" class="assistant-button">
-                ✦ Open Acassistant →
+        <!-- CALL TO ACTION -->
+        <section class="landing-cta">
+            <h2>Ready to make student life easier?</h2>
+            <p>Start organizing your student life with AralKap.</p>
+            <a href="signup.html" class="landing-primary-btn">
+                Get Started Today →
             </a>
-
         </section>
 
     </main>
 
-<script src="javascript.js"></script>
-    
+
+    <!-- FOOTER -->
+    <footer class="landing-footer">
+        <div class="landing-brand">
+            <span>🎓</span>
+            <h2>AralKap</h2>
+        </div>
+
+        <p>Your Student Companion.</p>
+        <p>© 2026 AralKap. All rights reserved.</p>
+    </footer>
+
+
+    <script src="javascript.js"></script>
+
 </body>
 </html>

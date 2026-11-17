@@ -130,7 +130,57 @@
     </main>
 
     <script src="javascript.js"></script>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <script type="module">
+        import { auth, db } from "./firebase-config.js";
+        import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+        import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+        const signupForm = document.getElementById("signup-form");
+        const emailInput = document.getElementById("signup-email");
+        const passwordInput = document.getElementById("signup-password");
+        const confirmPasswordInput = document.getElementById("signup-confirm-password");
+        const messageBox = document.getElementById("signup-message");
+
+        signupForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            messageBox.textContent = "";
+
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                messageBox.textContent = "Passwords do not match.";
+                messageBox.style.color = "#d93025";
+                return;
+            }
+
+            try {
+                messageBox.textContent = "Creating your account...";
+                messageBox.style.color = "inherit";
+
+                const userCredential = await createUserWithEmailAndPassword(
+                    auth,
+                    emailInput.value.trim(),
+                    passwordInput.value
+                );
+                const user = userCredential.user;
+
+                await setDoc(doc(db, "users", user.uid), {
+                    email: user.email,
+                    allowanceBalance: 0,
+                    createdAt: new Date()
+                });
+
+                messageBox.textContent = "Account created! Redirecting to login...";
+                messageBox.style.color = "#188038";
+
+                setTimeout(() => {
+                    window.location.href = "login.html";
+                }, 1500);
+            } catch (error) {
+                messageBox.textContent = error.message;
+                messageBox.style.color = "#d93025";
+            }
+        });
+    </script>
 
 </body>
 </html>

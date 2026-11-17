@@ -27,7 +27,7 @@
         </div>
 
        <nav class="sidebar-nav">
-            <a href="../index.html" class="nav-link ">
+            <a href="../dashboard.html" class="nav-link ">
                 
                     <img src="../Icons/dashboard-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
                     <img src="../Icons/dashboard-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
@@ -290,7 +290,199 @@
     </div>
 </div>
 
-<script src="../javascript.js"></script>
+    <script src="../javascript.js"></script>  
+
+    <script type="module">
+    import { auth, db } from "../firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+    import {
+        collection,
+        addDoc,
+        getDocs,
+        doc,
+        updateDoc,
+        deleteDoc,
+        query,
+        orderBy
+    } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+    let currentUser = null;
+    let allTasks = [];
+    let activeStatusFilter = "all";
+
+    const taskListEl = document.getElementById("task-list");
+    const emptyStateEl = document.getElementById("task-empty-state");
+    const taskForm = document.getElementById("task-form");
+    const taskModal = document.getElementById("task-modal");
+    const searchInput = document.getElementById("task-search");
+    const categoryFilter = document.getElementById("task-category-filter");
+
+    // 1. AUTH GUARD & INITIAL LOAD
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+            window.location.href = "../login.html";
+            return;
+        }
+        currentUser = user;
+        await loadTasks();
+    });
+
+    // 2. LOGOUT HANDLER
+    const logoutBtn = document.querySelector(".logout-button");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", async () => {
+            await signOut(auth);
+            window.location.href = "../login.html";
+        });
+    }
+
+    // 3. LOAD TASKS FROM FIRESTORE
+    async function loadTasks() {
+        if (!currentUser) return;
+        const tasksRef = collection(db, "users", currentUser.uid, "tasks");
+        const q = query(tasksRef, orderBy("dueDate", "asc"));
+        const snapshot = await getDocs(q);
+
+        allTasks = [];
+        snapshot.forEach((docSnap) => {
+            allTasks.push({ id: docSnap.id, ...docSnap.data() });
+        });
+
+        updateCounters();
+        renderTasks();
+    }
+
+    // 4. UPDATE SUMMARY CARDS
+    function updateCounters() {
+        const total = allTasks.length;
+        const completed = allTasks.filter((t) => t.completed === true || t.status === "Completed").length;
+        const todo = total - completed;
+
+        document.getElementById("total-tasks").textContent = total;
+        document.getElementById("todo-tasks").textContent = todo;
+        document.getElementById("completed-tasks").textContent = completed;
+    }
+
+    // 5. RENDER FILTERED TASK LIST
+    function renderTasks() {
+        const keyword = searchInput.value.trim().toLowerCase();
+        const selectedCategory = categoryFilter.value;
+
+        const filtered = allTasks.filter((task) => {
+            const status = task.status || (task.completed ? "Completed" : "To Do");
+            const matchesStatus = activeStatusFilter === "all" || status === activeStatusFilter;
+            const matchesCategory = !selectedCategory || task.category === selectedCategory;
+            const matchesSearch =
+                !keyword ||
+                task.title.toLowerCase().includes(keyword) ||
+                (task.description && task.description.toLowerCase().includes(keyword));
+            return matchesStatus && matchesCategory && matchesSearch;
+        });
+
+        // Clear previously rendered task cards while preserving #task-empty-state
+        taskListEl.querySelectorAll(".firebase-task-item").forEach((el) => el.remove());
+
+        if (filtered.length === 0) {
+            emptyStateEl.style.display = "";
+            return;
+        }
+
+        emptyStateEl.style.display = "none";
+
+        filtered.forEach((task) => {
+            const isDone = task.completed === true || task.status === "Completed";
+            const item = document.createElement("div");
+            item.className = "firebase-task-item";
+            item.style.cssText =
+                "display:flex; justify-content:space-between; align-items:center; padding:1rem; margin-bottom:0.75rem; border-radius:12px; border:1px solid rgba(128,128,128,0.2); background:var(--card-bg, #fff); gap:1rem;";
+
+            item.innerHTML = `
+                <div style="display:flex; align-items:flex-start; gap:0.75rem;">
+                    <input type="checkbox" ${isDone ? "checked" : ""} style="margin-top:4px; width:18px; height:18px; cursor:pointer;">
+                    <div>
+                        <h4 style="margin:0 0 0.25rem; text-decoration:${isDone ? "line-through" : "none"}; opacity:${isDone ? "0.6" : "1"};">
+                            ${task.title}
+                        </h4>
+                        ${task.description ? `<p style="margin:0 0 0.35rem; font-size:0.9rem; opacity:0.8;">${task.description}</p>` : ""}
+                        <small style="opacity:0.75;">
+                            📁 ${task.category} · ⚡ ${task.priority} · 📅 Due: ${task.dueDate}
+                        </small>
+                    </div>
+                </div>
+                <button type="button" class="delete-task-btn" style="background:none; border:none; color:#d93025; cursor:pointer; font-weight:600;">
+                    Delete
+                </button>
+            `;
+
+            // Toggle Complete / To Do
+            const checkbox = item.querySelector("input[type='checkbox']");
+            checkbox.addEventListener("change", async () => {
+                const newCompleted = checkbox.checked;
+                await updateDoc(doc(db, "users", currentUser.uid, "tasks", task.id), {
+                    completed: newCompleted,
+                    status: newCompleted ? "Completed" : "To Do"
+                });
+                await loadTasks();
+            });
+
+            // Delete Task
+            const deleteBtn = item.querySelector(".delete-task-btn");
+            deleteBtn.addEventListener("click", async () => {
+                await deleteDoc(doc(db, "users", currentUser.uid, "tasks", task.id));
+                await loadTasks();
+            });
+
+            taskListEl.appendChild(item);
+        });
+    }
+
+    // 6. CREATE NEW TASK
+    taskForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        if (!currentUser) return;
+
+        const title = document.getElementById("task-title").value.trim();
+        const description = document.getElementById("task-description").value.trim();
+        const category = document.getElementById("task-category").value;
+        const priority = document.getElementById("task-priority").value;
+        const dueDate = document.getElementById("task-due-date").value;
+
+        try {
+            await addDoc(collection(db, "users", currentUser.uid, "tasks"), {
+                title,
+                description,
+                category,
+                priority,
+                dueDate,
+                status: "To Do",
+                completed: false,
+                createdAt: new Date()
+            });
+
+            taskForm.reset();
+            taskModal.hidden = true;
+            await loadTasks();
+        } catch (error) {
+            alert("Error saving task: " + error.message);
+        }
+    }, true);
+
+    // 7. FILTER & SEARCH LISTENERS
+    document.querySelectorAll(".filter-tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+            document.querySelectorAll(".filter-tab").forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
+            activeStatusFilter = tab.dataset.status;
+            renderTasks();
+        });
+    });
+
+    categoryFilter.addEventListener("change", renderTasks);
+    searchInput.addEventListener("input", renderTasks);
+    </script>   
+
+
     
 </body>
 </html>
