@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | AralKap</title>
+
+  <link rel="stylesheet" href="design.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+</head>
+<body>
+  <main class="auth-page">
+
+    <!-- Branding Panel -->
+    <section class="auth-brand-panel">
+
+      <a class="brand" href="login.html">
+        <span class="brand-icon">🎓</span>
+        <span><strong>AralKap</strong><small>Your Student Companion</small></span>
+      </a>
+
+      <div class="brand-message">
+
+        <span class="eyebrow">YOUR STUDENT COMPANION</span>
+        <h1>Make every school day count.</h1>
+        <p>Stay organized, manage your tasks, and keep track of your student life in one place.</p>
+        <div class="brand-decoration">
+          <span>✓</span>
+          <span>📚</span>
+          <span>✦</span>
+        </div>
+        
+      </div>
+
+      <p class="brand-footer">AralKap © 2026</p>
+    </section>
+
+    <!-- Authentication Form Panel -->
+    <section class="auth-form-panel">
+      <div class="auth-card">
+        <div class="mobile-brand">
+          <span class="brand-icon">🎓</span><strong>AralKap</strong>
+        </div>
+
+        <!-- Login View -->
+        <section id="login-view" class="auth-view">
+          <div class="form-heading">
+            <span class="eyebrow">WELCOME BACK</span>
+            <h2>Log in to your account</h2>
+            <p>Enter your credentials to continue.</p>
+          </div>
+
+          <form id="login-form" action="#PRE-DITO-PHP-FILE" method="POST">
+            <label for="login-email">Email address</label>
+            <input
+                id="login-email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+            >
+
+            <div class="label-row">
+              <label for="login-password">Password</label>
+              <button class="text-button" type="button" data-show="forgot-view">Forgot password?</button>
+            </div>
+
+            <div class="password-field">
+              <input
+                  id="login-password"
+                  name="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  autocomplete="current-password"
+                  required
+              > 
+
+              <button class="password-toggle" type="button"data-toggle-password="login-password"aria-label="Show password">
+              <img src="Icons/show.png" alt=""> </button>
+
+            </div>
+
+            <p class="form-message" id="login-message" role="status"></p>
+            <button class="primary-button" type="submit">Log In <span>→</span></button>
+            <div class="auth-divider"> <span>OR</span> </div>
+            <div id="google-signin-button"></div>
+            <p class="form-message" id="google-message" role="status"></p>
+
+          </form>
+
+          <p class="switch-prompt">
+            Don't have an account? 
+            <a class="text-button" type="button" data-show="signup-view" href="signup.html">Sign up</a>
+          </p>
+        </section>
+
+        
+        <!-- Forgot Password View -->
+        <section id="forgot-view" class="auth-view" hidden>
+          <button class="back-button" type="button" data-show="login-view">← Back to login</button>
+
+          <div class="form-heading">
+            <span class="eyebrow">ACCOUNT RECOVERY</span>
+            <h2>Forgot your password?</h2>
+            <p>Enter the email address associated with your account.</p>
+          </div>
+
+          <form id="forgot-form">
+            <label for="forgot-email">Email address</label>
+            <input id="forgot-email" type="email" placeholder="you@example.com" autocomplete="email" required>
+
+            <p class="form-message" id="forgot-message" role="status"></p>
+            <button class="primary-button" type="submit">Continue <span>→</span></button>
+          </form>
+        </section>
+
+        <p class="auth-note">AralKap · Your student companion.</p>
+      </div>
+    </section>
+
+  </main>
+  <script src="javascript.js"></script>
+ 
+</body>
+</html>

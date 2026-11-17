@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acasisstant | AralKap</title>
+    <link rel="stylesheet" href="../design.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <label for="sidebar-toggle" class="sidebar-collapse-button"> ☰ </label>
+
+      <div class="brand">
+            <a href="../index.html" class="landing-brand">
+                <img src="../Icons/blue.svg" class="blue-icon" alt="AralKap Logo">
+                <img src="../Icons/white.svg" class="white-icon" alt="AralKap Logo">
+                <h2>AralKap</h2>
+            </a>
+            <p>Your Student Companion</p>
+
+        </div>
+
+        
+      <nav class="sidebar-nav">
+            <a href="../index.html" class="nav-link ">
+                
+                    <img src="../Icons/dashboard-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                    <img src="../Icons/dashboard-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+
+                <span class="nav-text">Dashboard</span>
+            </a>
+
+                <a href="tasks.html" class="nav-link ">
+                    <img src="../Icons/todo-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                    <img src="../Icons/todo.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+                <span class="nav-text"> My Tasks</span>
+            </a>
+
+            <a href="baon-tracker.html" class="nav-link">
+                
+                <img src="../Icons/baon-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                <img src="../Icons/baon-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+                <span class="nav-text">Baon Tracker</span>
+            </a>
+
+            <a href="Acassistant.html" class="nav-link active">
+                <img src="../Icons/aralkapAI-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                <img src="../Icons/aralkapAI-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+                <span class="nav-text">Acassistant</span>
+            </a>
+        </nav>
+
+                <div class="sidebar-footer">
+                <button class="nav-link logout-button" type="button">
+
+                    <span class="nav-icon logout-icon">
+                        <img src="../Icons/logout.png   " alt="Logout">
+                    </span>
+
+                    <span class="nav-text">Logout</span>
+                </button>
+            </div>
+
+    </aside>
+
+
+ <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <label for="sidebar-toggle" class="mobile-sidebar-overlay"></label>
+
+        <!-- HEADER -->
+        <header class="dashboard-header">
+
+            <label for="sidebar-toggle" class="mobile-menu-button" aria-label="Open navigation"> ☰ </label>
+            
+            <div class="header-title">
+                <h1>Acassistant</h1>
+                <p>Your partner for your studies</p>
+            </div>
+
+            <div class="header-actions">
+                <input
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search transactions"
+                >
+
+                <button class="header-theme-button"  aria-label="Toggle theme">
+                    <span class="toggle-circle">
+                        <img src="../Icons/sun.png" class="sun-icon" alt="">
+                        <img src="../Icons/moon.png" class="moon-icon" alt="">
+                    </span>
+                </button>
+
+                 <a href="profile.html" class="profile-button">
+                    <img src="../Icons/user.png" alt="Profile">
+                </a>
+            </div>
+
+        </header>
+
+
+        <!-- WELCOME BANNER -->
+        <section class="aa-welcome">
+
+            <img src="../Icons/acassistant.gif"alt="Acassistant" class="welcome-gif">
+          
+            <div class="aa-welcome-text">
+                <h2>Hi! I'm Acasisstant.</h2>
+                <p>
+                    I'm here to help you study smarter, understand difficult
+                    topics, and stay organized with your schoolwork.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- SUGGESTIONS -->
+        <section class="aa-suggestions">
+
+            <div class="aa-section-heading">
+                <div>
+                    <h2>What can I help you with?</h2>
+                    <p>Choose a topic to get started.</p>
+                </div>
+            </div>
+
+            <div class="aa-suggestion-grid">
+
+                <div class="aa-suggestion-card" data-prompt="Help me understand a difficult lesson. Explain the topic in simple terms and give me examples.">
+                    <div class="aa-suggestion-icon aa-study-icon">
+                        📚
+                    </div>
+
+                    <h3>Study Help</h3>
+                    <p>Understand lessons and difficult concepts.</p>
+                    <span>Ask about a lesson →</span>
+                </div>
+
+
+                <div class="aa-suggestion-card" data-prompt="Help me with my homework. Guide me through the problem step by step.">
+                    <div class="aa-suggestion-icon aa-homework-icon">
+                        ✏️
+                    </div>
+
+                    <h3>Homework Help</h3>
+                    <p>Get guidance with your school activities.</p>
+                    <span>Get homework help →</span>
+                </div>
+
+
+                <div class="aa-suggestion-card" data-prompt="Help me improve my writing. Check my grammar, clarity, and organization.">
+                    <div class="aa-suggestion-icon aa-writing-icon">
+                        📝
+                    </div>
+
+                    <h3>Writing Assistant</h3>
+                    <p>Improve essays, reports, and written work.</p>
+                    <span>Improve my writing →</span>
+                </div>
+
+
+                <div class="aa-suggestion-card" data-prompt="Help me create a study schedule. Ask me about my subjects, deadlines, and available study time.">
+                    <div class="aa-suggestion-icon aa-planning-icon">
+                        📅
+                    </div>
+
+                    <h3>Study Planning</h3>
+                    <p>Organize your study time and school tasks.</p>
+                    <span>Plan my schedule →</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CHAT INTERFACE -->
+        <section class="aa-chat-card">
+
+            <div class="aa-chat-header">
+
+                <div>
+                    <h2>Chat with Acasisstant</h2>
+                    <p>Ask anything related to your studies.</p>
+                </div>       
+
+            </div>
+
+
+            <!-- CHAT MESSAGES -->
+            <div class="aa-chat-messages">
+
+                <div class="aa-message">
+
+                    <div class="aa-message-avatar">
+                        <img src="../Icons/aralkapAI-lightmode.webp" class="icon-lightmode" alt="AralKap AI avatar">
+                        <img src="../Icons/aralkapAI-darkmode.webp" class="icon-darkmode" alt="AralKap AI avatar">
+                    </div>
+
+                    <div class="aa-message-content">
+                        <span>Acasisstant</span>
+
+                        <p>
+                            Hello! What are you studying today?
+                            You can ask me to explain a topic, help with
+                            homework, or organize your study schedule.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGE INPUT -->
+            <div class="aa-chat-input">
+
+                <input
+                    type="text"
+                    id="aa-message-input"
+                    placeholder="Message Acassistant..."
+                    autocomplete="off"
+                >
+
+               <button type="submit" class="aa-send-button">
+                    <img src="../Icons/send.png" alt="Send">
+                </button>
+
+            </div>
+
+            <p class="aa-disclaimer">
+                Acasisstant is an AI study companion. Always review and
+                understand the information provided.
+            </p>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../javascript.js"></script>
+
+</body>
+</html>

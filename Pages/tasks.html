@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AralKap | My Tasks</title>
+    <link rel="stylesheet" href="../design.css">
+</head>
+<body>
+
+    <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle">  
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <label for="sidebar-toggle" class="sidebar-collapse-button"> ☰ </label>
+
+        <div class="brand">
+            <a href="../index.html" class="landing-brand">
+                <img src="../Icons/blue.svg" class="blue-icon" alt="AralKap Logo">
+                <img src="../Icons/white.svg" class="white-icon" alt="AralKap Logo">
+                <h2>AralKap</h2>
+            </a>
+            <p>Your Student Companion</p>
+
+        </div>
+
+       <nav class="sidebar-nav">
+            <a href="../index.html" class="nav-link ">
+                
+                    <img src="../Icons/dashboard-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                    <img src="../Icons/dashboard-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+
+                <span class="nav-text">Dashboard</span>
+            </a>
+
+                <a href="tasks.html" class="nav-link active">
+                    <img src="../Icons/todo-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                    <img src="../Icons/todo.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+                <span class="nav-text"> My Tasks</span>
+            </a>
+
+            <a href="baon-tracker.html" class="nav-link">
+                
+                <img src="../Icons/baon-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                <img src="../Icons/baon-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+                <span class="nav-text">Baon Tracker</span>
+            </a>
+
+            <a href="Acassistant.html" class="nav-link">
+                <img src="../Icons/aralkapAI-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                <img src="../Icons/aralkapAI-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+                <span class="nav-text">Acassistant</span>
+            </a>
+        </nav>
+
+            <div class="sidebar-footer">
+                <button class="nav-link logout-button" type="button">
+
+                    <span class="nav-icon logout-icon">
+                        <img src="../Icons/logout.png" alt="Logout">
+                    </span>
+
+                    <span class="nav-text">Logout</span>
+                </button>
+            </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <label for="sidebar-toggle" class="mobile-sidebar-overlay"></label>
+
+        <!-- HEADER -->
+        <header class="dashboard-header">
+
+            <label for="sidebar-toggle" class="mobile-menu-button" aria-label="Open navigation"> ☰ </label>
+
+            <div class="header-title">
+                <h1>My Tasks</h1>
+                <p>Organize your schoolwork and stay on track.</p>
+            </div>
+
+            <div class="header-actions">
+                <input  type="search"
+                        id="task-search"
+                        placeholder="Search"
+                        aria-label="Search tasks">
+
+               <button class="header-theme-button"  aria-label="Toggle theme">
+                    <span class="toggle-circle">
+                        <img src="../Icons/sun.png" class="sun-icon" alt="">
+                        <img src="../Icons/moon.png" class="moon-icon" alt="">
+                    </span>
+                </button>
+
+                 <a href="profile.html" class="profile-button">
+                    <img src="../Icons/user.png" alt="Profile">
+                </a>
+            </div>
+
+        </header>
+
+
+        <!-- TASK OVERVIEW -->
+        <section class="task-summary">
+
+            <article class="task-summary-card">
+                <img src="../Icons/summary-todo.gif" class="task-summary-icon icon-lightmode" alt="Todo-Icon">
+                <img src="../Icons/summary-todo-white.gif" class="task-summary-icon icon-darkmode" alt="Todo-Icon">
+                <div>
+                    <p>All Tasks</p>
+                    <h2 id="total-tasks">0</h2>
+                </div>
+            </article>
+
+            <article class="task-summary-card">
+                <img src="../Icons/summary-pending-blue.gif" class="task-summary-icon icon-lightmode" alt="Todo-Icon">
+                <img src="../Icons/summary-pending-white.gif" class="task-summary-icon icon-darkmode" alt="Todo-Icon">
+                <div>
+                    <p>To Do</p>
+                    <h2 id="todo-tasks">0</h2>
+                </div>
+            </article>
+
+            <article class="task-summary-card">
+                <img src="../Icons/summary-completed-todo-blue.gif" class="task-summary-icon icon-lightmode" alt="Todo-Icon">
+                <img src="../Icons/summary-completed-todo-white.gif" class="task-summary-icon icon-darkmode" alt="Todo-Icon">
+                <div>
+                    <p>Completed</p>
+                    <h2 id="completed-tasks">0</h2>
+                </div>
+            </article>
+
+        </section>
+
+
+        <!-- TASK MANAGEMENT -->
+        <section class="task-management">
+
+            <div class="task-page-heading">
+                <div>
+                    <h2>Task List</h2>
+                    <p>Manage all your academic activities in one place.</p>
+                </div>
+
+                <button class="add-task-button" type="button">
+                    + Add New Task
+                </button>
+            </div>
+
+
+            <!-- FILTERS -->
+            <div class="task-filters">
+
+                <div class="filter-tabs">
+                    <button class="filter-tab active" type="button" data-status="all">All</button>
+                    <button class="filter-tab" type="button" data-status="To Do">To Do</button>
+                    <button class="filter-tab" type="button" data-status="In Progress">In Progress</button>
+                    <button class="filter-tab" type="button" data-status="Completed">Completed</button>
+                </div>
+                
+                <select id="task-category-filter" aria-label="Filter by category">
+                    <option value="">All Categories</option>
+                    <option value="Assignment">Assignment</option>
+                    <option value="Examination">Examination</option>
+                    <option value="Project">Project</option>
+                    <option value="Other">Other</option>
+                </select>
+
+            </div>
+
+
+            <!-- EMPTY TASK LIST -->
+            <div id="task-list">
+
+                <div class="task-empty-state" id="task-empty-state">
+
+                    <img src="../Icons/summary-todo.gif" class="empty-task-icon icon-lightmode" alt="Todo-Icon">
+
+                    <img src="../Icons/summary-todo-white.gif" class="empty-task-icon icon-darkmode" alt="Todo-Icon">
+
+                    <h3>No tasks yet</h3>
+
+                    <p>
+                        You haven't added any tasks.
+                        Start organizing your school activities!
+                    </p>
+
+                    <button class="add-task-button" type="button">
+                        + Create Your First Task
+                    </button>
+
+                </div>
+
+</div>
+
+        </section>
+
+    </main>
+
+    <!-- ADD TASK FORM -->
+<div class="task-modal" id="task-modal" hidden>
+    <div class="task-modal-overlay" data-close-modal></div>
+
+    <div class="task-modal-content" role="dialog"
+         aria-modal="true" aria-labelledby="task-modal-title">
+
+        <div class="task-modal-header">
+            <div>
+                <h2 id="task-modal-title">Create New Task</h2>
+                <p>Add a new academic activity to your task list.</p>
+            </div>
+
+            <button type="button" class="task-modal-close"
+                    data-close-modal aria-label="Close">
+                &times;
+            </button>
+        </div>
+
+        <form id="task-form" method="POST" action="../php/tasks/create.php">
+
+    <div class="task-form-group">
+        <label for="task-title">Task Title</label>
+        <input
+            type="text"
+            id="task-title"
+            name="title"
+            placeholder="e.g. Mathematics Assignment"
+            required
+        >
+    </div>
+
+    <div class="task-form-group">
+        <label for="task-description">Description</label>
+        <textarea
+            id="task-description"
+            name="description"
+            placeholder="Enter task details (optional)"
+            rows="3"
+        ></textarea>
+    </div>
+
+    <div class="task-form-row">
+        <div class="task-form-group">
+            <label for="task-category">Category</label>
+            <select id="task-category" name="category" required>
+                <option value="" disabled selected>Select category</option>
+                <option value="Assignment">Assignment</option>
+                <option value="Examination">Examination</option>
+                <option value="Project">Project</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="task-form-group">
+            <label for="task-priority">Priority</label>
+            <select id="task-priority" name="priority" required>
+                <option value="Low">Low</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="High">High</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="task-form-group">
+        <label for="task-due-date">Due Date</label>
+        <input
+            type="date"
+            id="task-due-date"
+            name="due_date"
+            required
+        >
+    </div>
+
+    <div class="task-modal-actions">
+        <button type="button" class="task-cancel-button" data-close-modal>
+            Cancel
+        </button>
+
+        <button type="submit" class="task-save-button">
+            Create Task
+        </button>
+    </div>
+
+</form>
+    </div>
+</div>
+
+<script src="../javascript.js"></script>
+    
+</body>
+</html>

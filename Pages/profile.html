@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | AralKap</title>
+    <link rel="stylesheet" href="../design.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <label for="sidebar-toggle" class="sidebar-collapse-button"> ☰ </label>
+
+        <div class="brand">
+            <a href="../index.html" class="landing-brand">
+                <img src="../Icons/blue.svg" class="blue-icon" alt="AralKap Logo">
+                <img src="../Icons/white.svg" class="white-icon" alt="AralKap Logo">
+                <h2>AralKap</h2>
+            </a>
+            <p>Your Student Companion</p>
+
+        </div>
+
+       
+      <nav class="sidebar-nav">
+            <a href="../index.html" class="nav-link ">
+                
+                    <img src="../Icons/dashboard-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                    <img src="../Icons/dashboard-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+
+                <span class="nav-text">Dashboard</span>
+            </a>
+
+                <a href="tasks.html" class="nav-link ">
+                    <img src="../Icons/todo-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                    <img src="../Icons/todo.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+                <span class="nav-text"> My Tasks</span>
+            </a>
+
+            <a href="baon-tracker.html" class="nav-link">
+                
+                <img src="../Icons/baon-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                <img src="../Icons/baon-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+                <span class="nav-text">Baon Tracker</span>
+            </a>
+
+            <a href="Acassistant.html" class="nav-link">
+                <img src="../Icons/aralkapAI-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                <img src="../Icons/aralkapAI-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+                <span class="nav-text">Acassistant</span>
+            </a>
+        </nav>
+
+            <div class="sidebar-footer">
+                <button class="nav-link logout-button" type="button">
+
+                    <span class="nav-icon logout-icon">
+                        <img src="../Icons/logout.png" alt="Logout">
+                    </span>
+
+                    <span class="nav-text">Logout</span>
+                </button>
+            </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content ap-main">
+
+        <label for="sidebar-toggle" class="mobile-sidebar-overlay"></label>
+
+        <!-- HEADER -->
+        <header class="dashboard-header">
+
+            <label for="sidebar-toggle" class="mobile-menu-button" aria-label="Open navigation"> ☰ </label>
+
+            <div class="header-title">
+                <h1>My profile</h1>
+                <p>Manage your personal information and account</p>
+            </div>
+
+            <div class="header-actions">
+
+                <button class="header-theme-button"  aria-label="Toggle theme">
+                    <span class="toggle-circle">
+                        <img src="../Icons/sun.png" class="sun-icon" alt="">
+                        <img src="../Icons/moon.png" class="moon-icon" alt="">
+                    </span>
+                </button>
+
+                 <a href="profile.html" class="profile-button">
+                    <img src="../Icons/user.png" alt="Profile">
+                </a>
+            </div>
+
+        </header>
+
+        <!-- PROFILE OVERVIEW -->
+        <section class="ap-profile-overview">
+
+            <a href="Pages/profile.html" class="profile-button">
+                    <img src="../Icons/user.png" alt="Profile">
+                </a>
+
+            <div class="ap-profile-identity">
+                <h2>Student Name</h2>
+                <p>Student Account</p>
+            </div>
+
+            <button class="ap-edit-button" type="button">
+                ✏️ Edit Profile
+            </button>
+
+        </section>
+
+
+        <!-- PROFILE CONTENT -->
+        <div class="ap-content-grid">
+
+            <!-- PERSONAL INFORMATION -->
+            <section class="ap-card">
+
+                <div class="ap-card-heading">
+                    <div>
+                        <h2>Personal Information</h2>
+                        <p>Your basic personal details.</p>
+                    </div>
+                    <a href="Pages/profile.html" class="profile-button">
+                    <img src="../Icons/user.png" alt="Profile">
+                </a>
+                </div>
+
+                <div class="ap-information-list">
+
+                    <div class="ap-information-item">
+                        <span>Full Name</span>
+                        <strong>Not provided</strong>
+                    </div>
+
+                    <div class="ap-information-item">
+                        <span>Email Address</span>
+                        <strong>Not provided</strong>
+                    </div>
+
+                    <div class="ap-information-item">
+                        <span>Gender</span>
+                        <strong>Not provided</strong>
+                    </div>
+
+                    <div class="ap-information-item">
+                        <span>Birthday</span>
+                        <strong>Not provided</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- STUDENT INFORMATION -->
+            <section class="ap-card">
+
+                <div class="ap-card-heading">
+                    <div>
+                        <h2>Student Information</h2>
+                        <p>Your academic details.</p>
+                    </div>
+                     <img src="../Icons/file.png" class="ap-card-icon" alt="Information Icon">
+                </div>
+
+                <div class="ap-information-list">
+
+                    <div class="ap-information-item">
+                        <span>School</span>
+                        <strong>Not provided</strong>
+                    </div>
+
+                    <div class="ap-information-item">
+                        <span>Course / Strand</span>
+                        <strong>Not provided</strong>
+                    </div>
+
+                    <div class="ap-information-item">
+                        <span>Year Level</span>
+                        <strong>Not provided</strong>
+                    </div>
+
+                    <div class="ap-information-item">
+                        <span>Section</span>
+                        <strong>Not provided</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+            
+
+        </div>
+
+        <footer class="ap-footer">
+            <p>AralKap © 2026 · Your student companion.</p>
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="../javascript.js"></script>
+
+</body>
+</html>

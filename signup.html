@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AralKap | Sign Up</title>
+    <link rel="stylesheet" href="design.css">
+</head>
+<body>
+
+    <main class="auth-page">
+
+        <!-- BRAND PANEL -->
+        <section class="auth-brand-panel">
+            <a href="landing.html" class="brand">
+                <span class="brand-icon">🎓</span>
+                <span>
+                    <strong>AralKap</strong>
+                    <small>Your Student Companion</small>
+                </span>
+            </a>
+
+            <div class="brand-message">
+                <span class="eyebrow">WELCOME TO ARALKAP</span>
+                <h1>Your student life, organized.</h1>
+                <p>
+                    Manage your allowance, organize your school tasks,
+                    and get help with your studies—all in one place.
+                </p>
+                <div class="brand-decoration">
+                    <span>₱</span>
+                    <span>✓</span>
+                    <span>✦</span>
+                </div>
+            </div>
+
+            <p class="brand-footer">
+                © 2026 AralKap. All rights reserved.
+            </p>
+        </section>
+
+        <!-- FORM PANEL -->
+        <section class="auth-form-panel">
+            <div class="auth-card">
+
+                <!-- MOBILE BRAND -->
+                <div class="mobile-brand">
+                    <span class="brand-icon">🎓</span>
+                    <strong>AralKap</strong>
+                </div>
+
+                <!-- SIGN UP FORM -->
+                <section id="signup-view" class="auth-view">
+                    <div class="form-heading">
+                        <span class="eyebrow">GET STARTED</span>
+                        <h2>Create your account</h2>
+                        <p>Sign up to start organizing your student life.</p>
+                    </div>
+
+                    <form id="signup-form" action="#PRE-DITO-PHP-FILE" method="POST">
+                        <label for="signup-email">Email address</label>
+                        <input
+                            id="signup-email"
+                            name="email"
+                            type="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                        <label for="signup-password">Password</label>
+                        <div class="password-field">
+                            <input
+                                id="signup-password"
+                                name="password"
+                                type="password"
+                                placeholder="Create a password"
+                                minlength="8"
+                                autocomplete="new-password"
+                                required
+                            >
+                            <button class="password-toggle" type="button"
+                                data-toggle-password="signup-password"
+                                aria-label="Show password">
+                                <img src="Icons/show.png" alt="">
+                            </button>
+
+                        </div>
+
+                        <small class="field-hint">
+                            Use at least 8 characters.
+                        </small>
+
+                        <label for="signup-confirm-password">Confirm Password</label>
+
+<div class="password-field">
+    <input
+        id="signup-confirm-password"
+        name="confirm_password"
+        type="password"
+        placeholder="Confirm your password"
+        autocomplete="new-password"
+        required
+    >
+</div>
+
+                        <p class="form-message" id="signup-message" role="status"></p>
+
+                        <button class="primary-button" type="submit">
+                            Create Account <span>→</span>
+                        </button>
+
+                        <div class="auth-divider">
+                            <span>OR</span>
+                        </div>
+
+                        <div id="google-signin-button"></div>
+                        <p class="form-message" id="google-message" role="status"></p>
+                    </form>
+
+                    <p class="switch-prompt">
+                        Already have an account?
+                        <a href="login.html" class="text-button">Log in</a>
+                    </p>
+                </section>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script src="javascript.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+</body>
+</html>

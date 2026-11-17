@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AralKap | Baon Tracker</title>
+    <link rel="stylesheet" href="../design.css">
+</head>
+<body>
+
+    <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <label for="sidebar-toggle" class="sidebar-collapse-button"> ☰ </label>
+
+        <div class="brand">
+            <a href="../index.html" class="landing-brand">
+                <img src="../Icons/blue.svg" class="blue-icon" alt="AralKap Logo">
+                <img src="../Icons/white.svg" class="white-icon" alt="AralKap Logo">
+                <h2>AralKap</h2>
+            </a>
+            <p>Your Student Companion</p>
+
+        </div>
+
+        
+       <nav class="sidebar-nav">
+            <a href="../index.html" class="nav-link ">
+                
+                    <img src="../Icons/dashboard-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                    <img src="../Icons/dashboard-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+
+                <span class="nav-text">Dashboard</span>
+            </a>
+
+                <a href="tasks.html" class="nav-link ">
+                    <img src="../Icons/todo-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                    <img src="../Icons/todo.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+                <span class="nav-text"> My Tasks</span>
+            </a>
+
+            <a href="baon-tracker.html" class="nav-link active">
+                
+                <img src="../Icons/baon-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                <img src="../Icons/baon-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+                <span class="nav-text">Baon Tracker</span>
+            </a>
+
+            <a href="Acassistant.html" class="nav-link">
+                <img src="../Icons/aralkapAI-lightmode.webp" class="nav-icon icon-lightmode" alt="Dashboard">
+                <img src="../Icons/aralkapAI-darkmode.webp" class="nav-icon icon-darkmode" alt="Dashboard">
+                <span class="nav-text">Acassistant</span>
+            </a>
+        </nav>
+
+            <div class="sidebar-footer">
+                <button class="nav-link logout-button" type="button">
+
+                    <span class="nav-icon logout-icon">
+                        <img src="../Icons/logout.png" alt="Logout">
+                    </span>
+
+                    <span class="nav-text">Logout</span>
+                </button>
+            </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <label for="sidebar-toggle" class="mobile-sidebar-overlay"></label>
+
+        <!-- HEADER -->
+        <header class="dashboard-header">
+
+            <label for="sidebar-toggle" class="mobile-menu-button" aria-label="Open navigation"> ☰ </label>
+
+            <div class="header-title">
+                <h1>Baon Tracker</h1>
+                <p>Keep track of your allowance and spending habits.</p>
+            </div>
+
+            <div class="header-actions">
+                <input
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search transactions"
+                >
+
+                <button class="header-theme-button"  aria-label="Toggle theme">
+                    <span class="toggle-circle">
+                        <img src="../Icons/sun.png" class="sun-icon" alt="">
+                        <img src="../Icons/moon.png" class="moon-icon" alt="">
+                    </span>
+                </button>
+
+                 <a href="profile.html" class="profile-button">
+                    <img src="../Icons/user.png" alt="Profile">
+                </a>
+            </div>
+
+        </header>
+
+
+        <!-- PERIOD SELECTOR -->
+        <section class="baon-period">
+            <div>
+                <h2>Financial Overview</h2>
+                <p>Monitor your money and manage your budget.</p>
+            </div>
+
+            <select aria-label="Select period">
+                <option>This Month</option>
+                <option>This Week</option>
+                <option>This Year</option>
+            </select>
+        </section>
+
+
+        <!-- FINANCIAL SUMMARY -->
+        <section class="baon-summary">
+
+            <article class="baon-summary-card">
+                <img src="../Icons/summary-baon-blue.gif" class="baon-summary-icon allowance-icon icon-lightmode" alt="Baon">
+                <img src="../Icons/summary-baon-white.gif" class="baon-summary-icon allowance-icon icon-darkmode" alt="Baon">
+                <div>
+                    <p>Total Allowance</p>
+                    <h2>₱0.00</h2>
+                    <span>Money received</span>
+                </div>
+            </article>
+
+            <article class="baon-summary-card">
+                <img src="../Icons/expense-lightmode.gif" class="baon-summary-icon allowance-icon icon-lightmode" alt="Expense">
+                <img src="../Icons/expense-darkmode.gif" class="baon-summary-icon allowance-icon icon-darkmode" alt="Expense">
+                <div>
+                    <p>Total Expenses</p>
+                    <h2>₱0.00</h2>
+                    <span>Money spent</span>
+                </div>
+            </article>
+
+            <article class="baon-summary-card">
+                <img src="../Icons/balance-lightmode.gif" class="baon-summary-icon allowance-icon icon-lightmode" alt="Balance">
+                <img src="../Icons/balance-darkmode.gif" class="baon-summary-icon allowance-icon icon-darkmode" alt="Balance">
+                <div>
+                    <p>Remaining Balance</p>
+                    <h2>₱0.00</h2>
+                    <span>Available money</span>
+                </div>
+            </article>
+
+
+        </section>
+
+
+        <!-- FINANCIAL CONTENT -->
+        <section class="baon-dashboard-grid">
+
+            <!-- SPENDING BREAKDOWN -->
+            <article class="content-card spending-card">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="heading-icon">◉</span>
+                        <h2>Spending Breakdown</h2>
+                    </div>
+
+                    <span class="month-label">This Month</span>
+                </div>
+
+                <div class="spending-content">
+
+                    <div class="spending-chart">
+                        <div class="spending-chart-inner">
+                            <strong>₱0</strong>
+                            <span>Total Spent</span>
+                        </div>
+                    </div>
+
+                    <div class="spending-legend">
+
+                        <div class="legend-row">
+                            <span><i class="category-dot food-dot"></i>Food</span>
+                            <strong>₱0.00</strong>
+                        </div>
+
+                        <div class="legend-row">
+                            <span><i class="category-dot transport-dot"></i>Transportation</span>
+                            <strong>₱0.00</strong>
+                        </div>
+
+                        <div class="legend-row">
+                            <span><i class="category-dot school-dot"></i>School</span>
+                            <strong>₱0.00</strong>
+                        </div>
+
+                        <div class="legend-row">
+                            <span><i class="category-dot other-dot"></i>Others</span>
+                            <strong>₱0.00</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+        <!-- TRANSACTION HISTORY -->
+        <section class="content-card transaction-card">
+
+            <div class="section-heading transaction-heading">
+                <div>
+                    <span class="heading-icon">▤</span>
+                    <h2>Recent Transactions</h2>
+                </div>
+
+                <button class="baon-primary-button" type="button">
+                    + Add Transaction
+                </button>
+            </div>
+
+            <div class="transaction-filters">
+
+                <button class="transaction-tab active" type="button">
+                    All
+                </button>
+
+                <button class="transaction-tab" type="button">
+                    Allowance
+                </button>
+
+                <button class="transaction-tab" type="button">
+                    Expenses
+                </button>
+
+                <button class="transaction-tab" type="button">
+                    Savings
+                </button>
+
+            </div>
+
+
+            <!-- EMPTY TRANSACTIONS -->
+            <div class="transaction-empty">
+
+                <div class="transaction-empty-icon">💸</div>
+
+                <h3>No transactions yet</h3>
+
+                <p>
+                    Your allowance, expenses, and savings
+                    transactions will appear here.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- MONEY TIP -->
+        <section class="baon-advice">
+
+            <div class="advice-icon">💡</div>
+
+            <div>
+                <h3>A little reminder!</h3>
+                <p>
+                    Track your spending regularly.
+                    Knowing where your money goes is the first step
+                    toward better money management.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+    
+<!-- ADD TRANSACTION FORM -->
+<div class="baon-modal" id="baon-modal" hidden>
+
+    <div class="baon-modal-overlay" data-close-modal></div>
+
+    <div class="baon-modal-content"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="baon-modal-title">
+
+        <div class="baon-modal-header">
+            <div>
+                <h2 id="baon-modal-title">Add Transaction</h2>
+                <p>Record your allowance, expenses, or savings.</p>
+            </div>
+
+            <button type="button"
+                    class="baon-modal-close"
+                    data-close-modal
+                    aria-label="Close">
+                &times;
+            </button>
+        </div>
+
+        <form id="baon-form">
+
+            <div class="baon-form-group">
+                <label for="transaction-name">Transaction Name</label>
+                <input type="text"
+                       id="transaction-name"
+                       placeholder="e.g. Daily Allowance"
+                       required>
+            </div>
+
+            <div class="baon-form-group">
+                <label for="transaction-type">Transaction Type</label>
+                <select id="transaction-type" required>
+                    <option value="" disabled selected>
+                        Select transaction type
+                    </option>
+                    <option value="Allowance">Allowance</option>
+                    <option value="Expenses">Expenses</option>
+                    <option value="Savings">Savings</option>
+                </select>
+            </div>
+
+            <div class="baon-form-group">
+                <label for="transaction-category">Category</label>
+                <select id="transaction-category" required>
+                    <option value="" disabled selected>
+                        Select category
+                    </option>
+                    <option value="Food">Food</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="School">School</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+
+            <div class="baon-form-group">
+                <label for="transaction-amount">Amount (₱)</label>
+                <input type="number"
+                       id="transaction-amount"
+                       placeholder="0.00"
+                       min="0.01"
+                       step="0.01"
+                       required>
+            </div>
+
+            <div class="baon-form-group">
+                <label for="transaction-date">Date</label>
+                <input type="date"
+                       id="transaction-date"
+                       required>
+            </div>
+
+            <div class="baon-form-group">
+                <label for="transaction-note">Notes (Optional)</label>
+                <textarea id="transaction-note"
+                          rows="3"
+                          placeholder="Additional details..."></textarea>
+            </div>
+
+            <div class="baon-modal-actions">
+                <button type="button"
+                        class="baon-cancel-button"
+                        data-close-modal>
+                    Cancel
+                </button>
+
+                <button type="submit" class="baon-save-button">
+                    Save Transaction
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<script src="../javascript.js"></script>
+
+</body>
+</html>
